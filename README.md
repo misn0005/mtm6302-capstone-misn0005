@@ -11,4 +11,4 @@ The yellow used was a web-safe version of Pikachu yellow, the most iconic charac
 
 I chose a bright red icon to signify the Pokémon who have been marked as caught. This ensures they stand out, while having a really nice contrast against the dark backgrounds and bright yellow.
 
-For headings, I chose to use the Pokémon-Solid font, to stay withing branding conventions and to make the site easily recognizable to new users. However, for more basic text such as Pokémon names and abilities, I chose Arial Rounded MT. This ensures all important information and text is easily readable. 
+For headings, I chose to use the Pokémon-Solid font, to stay withing branding conventions and to make the site easily recognizable to new users. However, for more basic text such as Pokémon names and abilities, I chose Arial Rounded MT. This ensures all important information and text is easily readable.  

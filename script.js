@@ -70,15 +70,16 @@ function hidePopup() {
   overlay.style.display = 'none';
 }
 
-function favoritePokemon(name) {
-  if (!favorites.includes(name)) {
-    favorites.push(name);
+function favoritePokemon(url) {
+  if (!favorites.includes(url)) {
+    favorites.push(url);
     localStorage.setItem('favorites', JSON.stringify(favorites));
-    alert(`${name} has been added to favorites!`);
+    alert(`${url} has been added to favorites!`);
   } else {
-    alert(`${name} is already in favorites!`);
+    alert(`${url} is already in favorites!`);
   }
 }
+
 
 function handleFavoriteBtnClick(name) {
   favoritePokemon(name);
@@ -96,13 +97,12 @@ favoriteBtn.addEventListener('click', () => {
 const favoritedPokemon = JSON.parse(localStorage.getItem('favorites')) || [];
 let favorites = favoritedPokemon;
 
-function displayFavorites() {
+async function displayFavorites() {
   const favoritesList = document.getElementById('favorites-list');
   favoritesList.innerHTML = '';
 
-
-  favorites.forEach(async (pokemonUrl) => {
-    const response = await fetch(pokemonUrl);
+  for (const url of favorites) {
+    const response = await fetch(url);
     const data = await response.json();
     const { id, name, sprites, stats } = data;
 
@@ -123,31 +123,19 @@ function displayFavorites() {
     pokemonCard.appendChild(idEl);
 
     favoritesList.appendChild(pokemonCard);
-  });
+  }
 }
 
-// Loop through the favorited Pokémon and display them on the page
-const favoritesList = document.getElementById('favorites-list');
-favoritedPokemon.forEach(async (pokemonUrl) => {
-  const response = await fetch(pokemonUrl);
-  const data = await response.json();
-  const { id, name, sprites, stats } = data;
 
-  const pokemonCard = document.createElement('div');
-  pokemonCard.classList.add('pokemon-card');
+const favoritesList = document.querySelector('#favorites-list');
 
-  const img = document.createElement('img');
-  img.src = sprites.front_default;
-
-  const nameEl = document.createElement('h3');
-  nameEl.textContent = name;
-
-  const idEl = document.createElement('p');
-  idEl.textContent = `#${id.toString().padStart(3, '0')}`;
-
-  pokemonCard.appendChild(img);
-  pokemonCard.appendChild(nameEl);
-  pokemonCard.appendChild(idEl);
-
-  favoritesList.appendChild(pokemonCard);
+// loop through the favorited pokemon and append them to the favoritesList element
+favorites.forEach(pokemon => {
+  const pokemonMarkup = `
+    <div class="favorite-pokemon">
+      <img src="${pokemon.image}" alt="${pokemon.name}">
+      <p>${pokemon.name}</p>
+    </div>
+  `;
+  favoritesList.innerHTML += pokemonMarkup;
 });

@@ -6,7 +6,6 @@ const favoriteBtn = document.getElementById('favorite-pokemon-btn');
 
 let offset = 0;
 let limit = 20;
-let favorites = [];
 
 // Fetch the first 20 pokemon and display them in the grid
 fetchPokemon();
@@ -81,9 +80,26 @@ function favoritePokemon(name) {
   }
 }
 
+function handleFavoriteBtnClick(name) {
+  favoritePokemon(name);
+}
+
+document.getElementById('close-popup').addEventListener('click', hidePopup);
+
+favoriteBtn.addEventListener('click', () => {
+  const popupName = document.getElementById('popup-name').textContent;
+  handleFavoriteBtnClick(popupName);
+});
+
+
+// Get the list of favorited Pokémon from local storage
+const favoritedPokemon = JSON.parse(localStorage.getItem('favorites')) || [];
+let favorites = favoritedPokemon;
+
 function displayFavorites() {
   const favoritesList = document.getElementById('favorites-list');
   favoritesList.innerHTML = '';
+
 
   favorites.forEach(async (pokemonUrl) => {
     const response = await fetch(pokemonUrl);
@@ -110,23 +126,6 @@ function displayFavorites() {
   });
 }
 
-
-
-function handleFavoriteBtnClick(name) {
-  favoritePokemon(name);
-}
-
-document.getElementById('close-popup').addEventListener('click', hidePopup);
-
-favoriteBtn.addEventListener('click', () => {
-  const popupName = document.getElementById('popup-name').textContent;
-  handleFavoriteBtnClick(popupName);
-});
-
-
-// Get the list of favorited Pokémon from local storage
-const favoritedPokemon = JSON.parse(localStorage.getItem('favoritedPokemon')) || [];
-
 // Loop through the favorited Pokémon and display them on the page
 const favoritesList = document.getElementById('favorites-list');
 favoritedPokemon.forEach(async (pokemonUrl) => {
@@ -152,4 +151,3 @@ favoritedPokemon.forEach(async (pokemonUrl) => {
 
   favoritesList.appendChild(pokemonCard);
 });
-
